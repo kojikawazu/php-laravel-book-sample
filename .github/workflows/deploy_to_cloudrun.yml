@@ -60,6 +60,7 @@ jobs:
                     --region ${{ secrets.GCP_REGION }} \
                     --platform managed \
                     --allow-unauthenticated \
+                    --port ${{ secrets.HTTP_PORT }} \
                     --set-env-vars APP_NAME=${{ secrets.APP_NAME }}, \
                     --set-env-vars APP_ENV=${{ secrets.APP_ENV }}, \
                     --set-env-vars APP_KEY=${{ secrets.APP_KEY }}, \
