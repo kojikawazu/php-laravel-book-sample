@@ -50,13 +50,13 @@ jobs:
 
             - name: Build and push Docker image
               run: |
-                  docker build -t ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPO_NAME }}/${{ secrets.APP_NAME }} .
-                  docker push ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPO_NAME }}/${{ secrets.APP_NAME }}
+                  docker build -t ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPO_NAME }}/${{ secrets.APP_IMAGE_NAME }} .
+                  docker push ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPO_NAME }}/${{ secrets.APP_IMAGE_NAME }}
 
             - name: Deploy to Cloud Run
               run: |
                   gcloud run deploy ${{ secrets.GCP_CLOUD_RUN_SERVICE_NAME }} \
-                    --image ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPO_NAME }}/${{ secrets.APP_NAME }} \
+                    --image ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPO_NAME }}/${{ secrets.APP_IMAGE_NAME }} \
                     --region ${{ secrets.GCP_REGION }} \
                     --platform managed \
                     --allow-unauthenticated \
@@ -109,7 +109,7 @@ jobs:
 
             - name: Cleanup old images
               run: |
-                  IMAGE_NAME="${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPO_NAME }}/${{ secrets.APP_NAME }}"
+                  IMAGE_NAME="${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPO_NAME }}/${{ secrets.APP_IMAGE_NAME }}"
                   
                   # 最新5つのタグを取得
                   KEEP_IMAGES=$(gcloud artifacts docker images list ${IMAGE_NAME} --format="value(DIGEST)" --sort-by="~UPDATE_TIME" | head -n 5)
