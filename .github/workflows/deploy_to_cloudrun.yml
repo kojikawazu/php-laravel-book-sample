@@ -118,17 +118,17 @@ jobs:
                     --set-env-vars AWS_USE_PATH_STYLE_ENDPOINT=${{ secrets.AWS_USE_PATH_STYLE_ENDPOINT }}, \
                     --set-env-vars VITE_APP_NAME=${{ secrets.VITE_APP_NAME }}
 
-            - name: Cleanup old images
-              run: |
-                  IMAGE_NAME="${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPO_NAME }}/${{ secrets.APP_IMAGE_NAME }}"
+            # - name: Cleanup old images
+            #   run: |
+            #       IMAGE_NAME="${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPO_NAME }}/${{ secrets.APP_IMAGE_NAME }}"
                   
-                  # 最新5つのタグを取得
-                  KEEP_IMAGES=$(gcloud artifacts docker images list ${IMAGE_NAME} --format="value(DIGEST)" --sort-by="~UPDATE_TIME" | head -n 10)
+            #       # 最新5つのタグを取得
+            #       KEEP_IMAGES=$(gcloud artifacts docker images list ${IMAGE_NAME} --format="value(DIGEST)" --sort-by="~UPDATE_TIME" | head -n 10)
 
-                  # すべてのタグを取得し、最新5つを除外したものを削除
-                  gcloud artifacts docker images list ${IMAGE_NAME} --format="value(DIGEST)" --sort-by="~UPDATE_TIME" | tail -n +6 | while read -r DIGEST; do
-                      if [[ ! -z "${DIGEST}" ]]; then
-                          echo "Deleting old image: ${IMAGE_NAME}:${DIGEST}"
-                          gcloud artifacts docker images delete "$IMAGE_NAME@$DIGEST" --quiet
-                      fi
-                  done
+            #       # すべてのタグを取得し、最新5つを除外したものを削除
+            #       gcloud artifacts docker images list ${IMAGE_NAME} --format="value(DIGEST)" --sort-by="~UPDATE_TIME" | tail -n +6 | while read -r DIGEST; do
+            #           if [[ ! -z "${DIGEST}" ]]; then
+            #               echo "Deleting old image: ${IMAGE_NAME}:${DIGEST}"
+            #               gcloud artifacts docker images delete "$IMAGE_NAME@$DIGEST" --quiet
+            #           fi
+            #       done
