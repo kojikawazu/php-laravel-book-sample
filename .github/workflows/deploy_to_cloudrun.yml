@@ -82,6 +82,7 @@ jobs:
                     --set-env-vars DB_DATABASE=${{ secrets.DB_DATABASE }}, \
                     --set-env-vars DB_USERNAME=${{ secrets.DB_USERNAME }}, \
                     --set-env-vars DB_PASSWORD=${{ secrets.DB_PASSWORD }}, \
+                    --set-env-vars DB_URL=${{ secrets.DB_URL }}, \
                     --set-env-vars SESSION_DRIVER=${{ secrets.SESSION_DRIVER }}, \
                     --set-env-vars SESSION_LIFETIME=${{ secrets.SESSION_LIFETIME }}, \
                     --set-env-vars SESSION_ENCRYPT=${{ secrets.SESSION_ENCRYPT }}, \
