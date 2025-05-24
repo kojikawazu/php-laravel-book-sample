@@ -15,4 +15,4 @@ COPY . .
 RUN chmod -R 755 storage bootstrap/cache
 
 # Serve with PHP's built-in server (or use Nginx + Supervisor if preferred)
-CMD php artisan serve --host=0.0.0.0 --port=8000
+CMD php artisan serve --host=0.0.0.0 --port=${PORT}
