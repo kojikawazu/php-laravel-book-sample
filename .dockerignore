@@ -1,0 +1,7 @@
+/.github
+/node_modules
+/storage/logs
+/storage/framework/cache
+.env
+.env.example
+.gitignore
